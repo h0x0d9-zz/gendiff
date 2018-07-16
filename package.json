@@ -1,5 +1,5 @@
 {
-  "name": "gendiff",
+  "name": "gendiff-cherepanov",
   "version": "0.1.0",
   "description": "The utility for finding differences in configuration files",
   "main": "index.js",
