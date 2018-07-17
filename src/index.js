@@ -1,11 +1,13 @@
 import fs from 'fs';
 import _ from 'lodash';
 import { safeLoad } from 'js-yaml';
+import ini from 'ini';
 import { extname } from 'path';
 
 const parsers = {
   json: JSON.parse,
   yml: safeLoad,
+  ini: ini.parse,
 };
 
 const getParserFor = format => parsers[format];

@@ -18,4 +18,11 @@ describe('GendDiff', () => {
     const actual = genDiff(beforeYaml, afterYaml);
     expect(actual).toBe(expected);
   });
+
+  it('Compare two INI files', () => {
+    const beforeIni = '__tests__/__fixtures__/before.ini';
+    const afterIni = '__tests__/__fixtures__/after.ini';
+    const actual = genDiff(beforeIni, afterIni);
+    expect(actual).toBe(expected);
+  });
 });

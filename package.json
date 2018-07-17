@@ -1,6 +1,6 @@
 {
   "name": "gendiff-cherepanov",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "The utility for finding differences in configuration files",
   "main": "dist/index.js",
   "bin": {
@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "commander": "^2.16.0",
+    "ini": "^1.3.5",
     "js-yaml": "^3.12.0",
     "lodash": "^4.17.10"
   }
