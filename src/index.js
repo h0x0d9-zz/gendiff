@@ -1,12 +1,24 @@
 import fs from 'fs';
 import _ from 'lodash';
+import { safeLoad } from 'js-yaml';
+import { extname } from 'path';
 
-export default (before, after) => {
-  const beforJSON = fs.readFileSync(before, 'utf-8');
-  const afterJSON = fs.readFileSync(after, 'utf-8');
+const parsers = {
+  json: JSON.parse,
+  yml: safeLoad,
+};
 
-  const beforeObj = JSON.parse(beforJSON);
-  const afterObj = JSON.parse(afterJSON);
+const getParserFor = format => parsers[format];
+
+export default (beforeFilename, afterFilename) => {
+  const beforeFormat = extname(beforeFilename).slice(1);
+  const afterFormat = extname(afterFilename).slice(1);
+
+  const beforeRaw = fs.readFileSync(beforeFilename, 'utf-8');
+  const afterRaw = fs.readFileSync(afterFilename, 'utf-8');
+
+  const beforeObj = getParserFor(beforeFormat)(beforeRaw);
+  const afterObj = getParserFor(afterFormat)(afterRaw);
 
   const keys = _.union(Object.keys(beforeObj), Object.keys(afterObj));
 
