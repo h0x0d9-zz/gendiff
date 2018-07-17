@@ -33,6 +33,7 @@
   "homepage": "https://github.com/h0x0d9/project-lvl2-s293#readme",
   "jest": {
     "testEnvironment": "node",
+    "collectCoverage": true,
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/__tests__/data"
