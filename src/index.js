@@ -26,16 +26,16 @@ export default (beforeFilename, afterFilename) => {
 
   const diff = keys.reduce((acc, key) => {
     if (_.has(beforeObj, key) && !_.has(afterObj, key)) {
-      return `${acc}\n  - ${key}: ${beforeObj[key]}`;
+      return [acc, `  - ${key}: ${beforeObj[key]}`].join('\n');
     }
     if (!_.has(beforeObj, key) && _.has(afterObj, key)) {
-      return `${acc}\n  + ${key}: ${afterObj[key]}`;
+      return [acc, `  + ${key}: ${afterObj[key]}`].join('\n');
     }
     if (beforeObj[key] === afterObj[key]) {
-      return `${acc}\n    ${key}: ${afterObj[key]}`;
+      return [acc, `    ${key}: ${afterObj[key]}`].join('\n');
     }
 
-    return `${acc}\n  + ${key}: ${afterObj[key]}\n  - ${key}: ${beforeObj[key]}`;
+    return [acc, `  + ${key}: ${afterObj[key]}`, `  - ${key}: ${beforeObj[key]}`].join('\n');
   }, '');
 
   return `{${diff}\n}`;
