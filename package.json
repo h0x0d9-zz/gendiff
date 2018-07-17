@@ -10,7 +10,7 @@
     "dist"
   ],
   "scripts": {
-    "test": "jest --watch",
+    "test": "jest",
     "babel-node": "babel-node",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build",
@@ -32,7 +32,11 @@
   },
   "homepage": "https://github.com/h0x0d9/project-lvl2-s293#readme",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__/data"
+    ]
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
