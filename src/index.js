@@ -1,8 +1,9 @@
 import fs from 'fs';
-import _ from 'lodash';
 import { safeLoad } from 'js-yaml';
 import ini from 'ini';
 import { extname } from 'path';
+import createAst from './diffast';
+import makeRander from './render';
 
 const parsers = {
   json: JSON.parse,
@@ -12,31 +13,17 @@ const parsers = {
 
 const getParserFor = format => parsers[format];
 
+export const parseFile = (fileName) => {
+  const fileFormat = extname(fileName).slice(1);
+  const rawData = fs.readFileSync(fileName, 'utf-8');
+  return getParserFor(fileFormat)(rawData);
+};
+
 export default (beforeFilename, afterFilename) => {
-  const beforeFormat = extname(beforeFilename).slice(1);
-  const afterFormat = extname(afterFilename).slice(1);
+  const beforeObj = parseFile(beforeFilename);
+  const afterObj = parseFile(afterFilename);
+  const ast = createAst(beforeObj, afterObj);
+  const render = makeRander(ast);
 
-  const beforeRaw = fs.readFileSync(beforeFilename, 'utf-8');
-  const afterRaw = fs.readFileSync(afterFilename, 'utf-8');
-
-  const beforeObj = getParserFor(beforeFormat)(beforeRaw);
-  const afterObj = getParserFor(afterFormat)(afterRaw);
-
-  const keys = _.union(Object.keys(beforeObj), Object.keys(afterObj));
-
-  const diff = keys.reduce((acc, key) => {
-    if (_.has(beforeObj, key) && !_.has(afterObj, key)) {
-      return [acc, `  - ${key}: ${beforeObj[key]}`].join('\n');
-    }
-    if (!_.has(beforeObj, key) && _.has(afterObj, key)) {
-      return [acc, `  + ${key}: ${afterObj[key]}`].join('\n');
-    }
-    if (beforeObj[key] === afterObj[key]) {
-      return [acc, `    ${key}: ${afterObj[key]}`].join('\n');
-    }
-
-    return [acc, `  + ${key}: ${afterObj[key]}`, `  - ${key}: ${beforeObj[key]}`].join('\n');
-  }, '');
-
-  return `{${diff}\n}`;
+  return render;
 };

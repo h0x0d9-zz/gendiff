@@ -1,6 +1,6 @@
 {
   "name": "gendiff-cherepanov",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "The utility for finding differences in configuration files",
   "main": "dist/index.js",
   "bin": {
@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "test": "jest",
+    "watch" : "jest --watch",
     "babel-node": "babel-node",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
     "prepublishOnly": "npm run build",
