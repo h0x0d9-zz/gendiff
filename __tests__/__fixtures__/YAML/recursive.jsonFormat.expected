@@ -1,0 +1,114 @@
+[
+  {
+    "common": {
+      "type": "nested",
+      "children": [
+        {
+          "setting1": {
+            "type": "fixed",
+            "before": "Value 1"
+          }
+        },
+        {
+          "setting2": {
+            "type": "removed",
+            "before": "200"
+          }
+        },
+        {
+          "setting3": {
+            "type": "updated",
+            "before": true,
+            "after": {
+              "key": "value"
+            }
+          }
+        },
+        {
+          "setting6": {
+            "type": "nested",
+            "children": [
+              {
+                "key": {
+                  "type": "fixed",
+                  "before": "value"
+                }
+              },
+              {
+                "ops": {
+                  "type": "added",
+                  "after": "vops"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "setting4": {
+            "type": "added",
+            "after": "blah blah"
+          }
+        },
+        {
+          "setting5": {
+            "type": "added",
+            "after": {
+              "key5": "value5"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "group1": {
+      "type": "nested",
+      "children": [
+        {
+          "baz": {
+            "type": "updated",
+            "before": "bas",
+            "after": "bars"
+          }
+        },
+        {
+          "foo": {
+            "type": "fixed",
+            "before": "bar"
+          }
+        },
+        {
+          "nest": {
+            "type": "updated",
+            "before": {
+              "key": "value"
+            },
+            "after": "str"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "group2": {
+      "type": "removed",
+      "before": {
+        "abc": "12345"
+      }
+    }
+  },
+  {
+    "follow": {
+      "type": "added",
+      "after": false
+    }
+  },
+  {
+    "group3": {
+      "type": "added",
+      "after": {
+        "fee": "100500"
+      }
+    }
+  }
+]

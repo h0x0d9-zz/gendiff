@@ -108,3 +108,31 @@ describe('Comparison of the difference between recursive files in plaintext form
     expect(actual).toBe(expectedIniRender);
   });
 });
+
+
+describe('Comparison of the difference between recursive files in JSON format', () => {
+  const expectedJsonRender = fs.readFileSync(
+    '__tests__/__fixtures__/JSON/recursive.jsonFormat.expected', 'utf-8',
+  );
+  const expectedYamlRender = fs.readFileSync(
+    '__tests__/__fixtures__/YAML/recursive.jsonFormat.expected', 'utf-8',
+  );
+  const expectedIniRender = fs.readFileSync(
+    '__tests__/__fixtures__/INI/recursive.jsonFormat.expected', 'utf-8',
+  );
+
+  it('Compare two JSON recursive files', () => {
+    const actual = gendiff(beforeRecursiveJson, afterRecursiveJson, 'json');
+    expect(actual).toBe(expectedJsonRender);
+  });
+
+  it('Compare two YAML recursive files', () => {
+    const actual = gendiff(beforeRecursiveYaml, afterRecursiveYaml, 'json');
+    expect(actual).toBe(expectedYamlRender);
+  });
+
+  it('Compare two INI recursive files', () => {
+    const actual = gendiff(beforeRecursiveIni, afterRecursiveIni, 'json');
+    expect(actual).toBe(expectedIniRender);
+  });
+});
