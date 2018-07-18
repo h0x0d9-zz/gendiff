@@ -18,7 +18,7 @@ const getPropertyActions = [
   },
 
   {
-    type: 'inserted',
+    type: 'added',
     check: (beforeObj, afterObj, property) => (
       !_.has(beforeObj, property) && _.has(afterObj, property)
     ),
@@ -26,7 +26,7 @@ const getPropertyActions = [
   },
 
   {
-    type: 'modifed',
+    type: 'updated',
     check: (beforeObj, afterObj, property) => (
       _.has(beforeObj, property) && _.has(afterObj, property)
       && !_.isEqual(beforeObj[property], afterObj[property])

@@ -33,14 +33,14 @@ const getNodeRenders = [
   },
 
   {
-    type: 'inserted',
+    type: 'added',
     render: ({ key, after }, nestingLevel) => (
       makeString('+', key, after, nestingLevel)
     ),
   },
 
   {
-    type: 'modifed',
+    type: 'updated',
     render: ({ key, before, after }, nestingLevel) => (
       [
         makeString('-', key, before, nestingLevel),

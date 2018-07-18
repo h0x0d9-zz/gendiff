@@ -1,0 +1,4 @@
+Property 'timeout' was updated. From value: '50' to value: '20'
+Property 'proxy' was removed
+Property 'follow' was removed
+Property 'verbose' was added with value: true
