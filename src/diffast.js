@@ -1,44 +1,59 @@
-import { isEqual, isPlainObject, union } from 'lodash';
+import _ from 'lodash';
 
 const getPropertyActions = [
   {
     type: 'nested',
-    check: (before, after) => isPlainObject(before) && isPlainObject(after)
-            && !isEqual(before, after),
+    check: (beforeObj, afterObj, property) => (
+      _.isPlainObject(beforeObj[property]) && _.isPlainObject(afterObj[property])
+    ),
     make: (before, after, fn) => ({ children: fn(before, after) }),
   },
-  {
-    type: 'fixed',
-    check: (before, after) => isEqual(before, after),
-    make: before => ({ before }),
-  },
+
   {
     type: 'removed',
-    check: (before, after) => after === undefined,
+    check: (beforeObj, afterObj, property) => (
+      _.has(beforeObj, property) && !_.has(afterObj, property)
+    ),
     make: before => ({ before }),
   },
+
   {
     type: 'inserted',
-    check: before => before === undefined,
+    check: (beforeObj, afterObj, property) => (
+      !_.has(beforeObj, property) && _.has(afterObj, property)
+    ),
     make: (before, after) => ({ after }),
   },
+
   {
     type: 'modifed',
-    check: (before, after) => before !== after,
+    check: (beforeObj, afterObj, property) => (
+      _.has(beforeObj, property) && _.has(afterObj, property)
+      && !_.isEqual(beforeObj[property], afterObj[property])
+    ),
     make: (before, after) => ({ before, after }),
+  },
+
+  {
+    type: 'fixed',
+    check: (beforeObj, afterObj, property) => (
+      _.has(beforeObj, property) && _.has(afterObj, property)
+      && _.isEqual(beforeObj[property], afterObj[property])
+    ),
+    make: before => ({ before }),
   },
 ];
 
-const getPropertyAction = (before, after) => getPropertyActions.find(
-  ({ check }) => check(before, after),
+const getPropertyAction = (before, after, property) => getPropertyActions.find(
+  ({ check }) => check(before, after, property),
 );
 
 const createAst = (beforeObj, afterObj) => {
-  const keys = union(Object.keys(beforeObj), Object.keys(afterObj));
+  const keys = _._.union(Object.keys(beforeObj), Object.keys(afterObj));
   return keys.map((key) => {
+    const { type, make } = getPropertyAction(beforeObj, afterObj, key);
     const beforeValue = beforeObj[key];
     const afterValue = afterObj[key];
-    const { type, make } = getPropertyAction(beforeValue, afterValue);
 
     return { key, type, ...make(beforeValue, afterValue, createAst) };
   });
