@@ -48,21 +48,6 @@ const getPropertyAction = (before, after, property) => getPropertyActions.find(
   ({ check }) => check(before, after, property),
 );
 
-function toJSON() {
-  const {
-    key, type, before, after, children,
-  } = this;
-
-  return {
-    [key]: {
-      type,
-      before,
-      after,
-      children,
-    },
-  };
-}
-
 const createAst = (beforeObj, afterObj) => {
   const keys = _._.union(Object.keys(beforeObj), Object.keys(afterObj));
   return keys.map((key) => {
@@ -71,7 +56,7 @@ const createAst = (beforeObj, afterObj) => {
     const afterValue = afterObj[key];
 
     return {
-      key, type, ...make(beforeValue, afterValue, createAst), toJSON,
+      key, type, ...make(beforeValue, afterValue, createAst),
     };
   });
 };
