@@ -47,13 +47,6 @@ const getNodeRenders = [
       return makeString(key, message, ancestry);
     },
   },
-
-  {
-    type: 'fixed',
-    render: () => (
-      ''
-    ),
-  },
 ];
 
 const getNodeRender = ({ type: searchType }) => (
@@ -62,7 +55,8 @@ const getNodeRender = ({ type: searchType }) => (
 
 export default (data) => {
   const renderAst = (ast, ancestry = '') => {
-    const prerenderedNodes = ast.filter(({ type }) => type !== 'fixed')
+    const prerenderedNodes = ast
+      .filter(({ type }) => type !== 'fixed')
       .map((node) => {
         const { render } = getNodeRender(node);
         return render(node, ancestry, renderAst);
