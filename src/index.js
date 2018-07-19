@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import parse from './configparser';
 import createAst from './diffast';
-import makeRender from './render';
+import makeRender from './renderers';
 
 
 const encoding = 'utf-8';
