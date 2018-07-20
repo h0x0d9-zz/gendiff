@@ -1,5 +1,8 @@
 import { isPlainObject, flatten } from 'lodash';
 
+const separatorSymb = '.';
+const makeAncestry = (base, key) => [base, key].join(separatorSymb).replace(/^(\.+)/g, '');
+
 const stringify = (value) => {
   if (isPlainObject(value)) return 'complex value';
 
@@ -8,7 +11,7 @@ const stringify = (value) => {
 };
 
 const makeString = (key, message, ancestry) => {
-  const newKey = ancestry.length === 0 ? key : [ancestry, key].join('.');
+  const newKey = makeAncestry(ancestry, key);
   return `Property '${newKey}' was ${message}`;
 };
 
@@ -16,7 +19,7 @@ const getNodeRenders = [
   {
     type: 'nested',
     render: ({ children, key }, ancestry, fn) => {
-      const newAncestry = ancestry.length === 0 ? key : [ancestry, key].join('.');
+      const newAncestry = makeAncestry(ancestry, key);
       return fn(children, newAncestry);
     },
   },
