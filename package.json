@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/h0x0d9/gendiff#readme",
   "jest": {
+    "collectCoverage": true,
     "testEnvironment": "node"
   },
   "devDependencies": {
