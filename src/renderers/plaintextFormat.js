@@ -10,56 +10,39 @@ const stringify = (value) => {
   return `value: ${newValue}`;
 };
 
-const makeString = (key, message, ancestry) => {
+const makeString = (base, message) => [base, message].join(' ');
+
+const renderNode = (node, ancestry) => {
+  const {
+    type, key, beforeValue, afterValue,
+  } = node;
   const newKey = makeAncestry(ancestry, key);
-  return `Property '${newKey}' was ${message}`;
+
+  const base = `Property '${newKey}'`;
+  switch (type) {
+    case 'removed':
+      return makeString(base, `was ${type}`);
+
+    case 'added':
+      return makeString(base, `was ${type} with ${stringify(afterValue)}`);
+
+    case 'updated':
+      return makeString(base, `was ${type}. From ${stringify(beforeValue)} to ${stringify(afterValue)}`);
+
+    default:
+      return makeString(base, `has unexpected type: ${type}`);
+  }
 };
-
-const getNodeRenders = [
-  {
-    type: 'nested',
-    render: ({ children, key }, ancestry, fn) => (fn(children, [...ancestry, key])),
-  },
-  {
-    type: 'removed',
-    render: ({ key, type }, ancestry) => {
-      const message = type;
-      return makeString(key, message, ancestry);
-    },
-  },
-
-  {
-    type: 'added',
-    render: ({ key, afterValue, type }, ancestry) => {
-      const message = `${type} with ${stringify(afterValue)}`;
-      return makeString(key, message, ancestry);
-    },
-  },
-
-  {
-    type: 'updated',
-    render: (node, ancestry) => {
-      const {
-        key, beforeValue, afterValue, type,
-      } = node;
-
-      const message = `${type}. From ${stringify(beforeValue)} to ${stringify(afterValue)}`;
-      return makeString(key, message, ancestry);
-    },
-  },
-];
-
-const getNodeRender = ({ type: searchType }) => (
-  getNodeRenders.find(({ type }) => searchType === type)
-);
 
 export default (data) => {
   const renderAst = (ast, ancestry = []) => {
     const prerenderedNodes = ast
       .filter(({ type }) => type !== 'fixed')
       .map((node) => {
-        const { render } = getNodeRender(node);
-        return render(node, ancestry, renderAst);
+        if (node.type === 'nested') {
+          return renderAst(node.children, [...ancestry, node.key]);
+        }
+        return renderNode(node, ancestry);
       });
 
     return flatten(prerenderedNodes).join('\n');
