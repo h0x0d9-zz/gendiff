@@ -3,13 +3,19 @@
 language: node_js
 node_js:
 - stable
-addons:
-    code_climate:
-      secure: "gjaJWZZstap+iJQ5LkP+/s0BXMq0q5KLBMcqqodvjtdI07z4frjeSrGlf7pmKeWjlwDhcEEPUtfGsD1NC1cjWE/SecR0s5AqiTeJe1tMzZ19V4xFSDWVxDof9XR6c7Byy3qJrKo0IPDQTbYDEoueFQBr9f8fcMMgZ05fXAT8csLZGWiHPtU/Ytfc7W4hNgGOZzB/NWn133subSYV5vyJc3IeOynpJO3nFIPVHpRKxakmPaYgoRVEZG3e0b27M0XKbHHaaK1KIhoPcVAVdUb9MqJUApP09rw6g1Iga6vgBYLxfPQBHc4hAQ2Kfy0RF3JmLFKwXx+23S9+bOyKE40Y9W8u7qCYNPh2jIspgwDt6COwaNqVoh+W9XytBUWJCHDaU72CyWNQ9q3qkgMxWNLw/kektn2muCt7Ga7nJU/2xCTfu16kcVRKoyrXLHqkR5oAOB3reB+9BF/TscA0fwMHw/z6QFfhAH3otKwJ2e3mPRmmtm7615VKFQ2M0eE5ZEQj1GgFsh6r2aPSABzBi70bXZYSyGS2jEwMjDvKhGFeylWi1cuyL34qUxpEPrhaxBc+MqxdlkYmHat7k9Pld9bpwBQXWuyHtV2VbLGfhKKbEM7TKf4VhnEySUr4mXR90zcJ5TMI9SsdNlTobrD1tjwCPDs4wuCCkr95Sq3Ary/H9wA="
+
 before_script:
-  - npm install codeclimate-test-reporter -g
+  - npm install nyc -g
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
 script: 
-  - make lint
-  - make test
+  - make lint test
+  - nyc --reporter=lcov npm test
+
 after_script:
-  - codeclimate-test-reporter < ./coverage/lcov.info
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+notifications:
+  email: false

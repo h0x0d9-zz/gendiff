@@ -33,12 +33,7 @@
   },
   "homepage": "https://github.com/h0x0d9/gendiff#readme",
   "jest": {
-    "testEnvironment": "node",
-    "collectCoverage": true,
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/__tests__/data"
-    ]
+    "testEnvironment": "node"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
