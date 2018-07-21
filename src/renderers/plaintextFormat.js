@@ -30,8 +30,8 @@ const getNodeRenders = [
 
   {
     type: 'added',
-    render: ({ key, after, type }, ancestry) => {
-      const message = `${type} with ${stringify(after)}`;
+    render: ({ key, afterValue, type }, ancestry) => {
+      const message = `${type} with ${stringify(afterValue)}`;
       return makeString(key, message, ancestry);
     },
   },
@@ -40,10 +40,10 @@ const getNodeRenders = [
     type: 'updated',
     render: (node, ancestry) => {
       const {
-        key, before, after, type,
+        key, beforeValue, afterValue, type,
       } = node;
 
-      const message = `${type}. From ${stringify(before)} to ${stringify(after)}`;
+      const message = `${type}. From ${stringify(beforeValue)} to ${stringify(afterValue)}`;
       return makeString(key, message, ancestry);
     },
   },

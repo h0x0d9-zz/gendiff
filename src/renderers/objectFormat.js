@@ -27,32 +27,32 @@ const getNodeRenders = [
 
   {
     type: 'removed',
-    render: ({ key, before }, nestingLevel) => (
-      makeString('-', key, before, nestingLevel)
+    render: ({ key, beforeValue }, nestingLevel) => (
+      makeString('-', key, beforeValue, nestingLevel)
     ),
   },
 
   {
     type: 'added',
-    render: ({ key, after }, nestingLevel) => (
-      makeString('+', key, after, nestingLevel)
+    render: ({ key, afterValue }, nestingLevel) => (
+      makeString('+', key, afterValue, nestingLevel)
     ),
   },
 
   {
     type: 'updated',
-    render: ({ key, before, after }, nestingLevel) => (
+    render: ({ key, beforeValue, afterValue }, nestingLevel) => (
       [
-        makeString('-', key, before, nestingLevel),
-        makeString('+', key, after, nestingLevel),
+        makeString('-', key, beforeValue, nestingLevel),
+        makeString('+', key, afterValue, nestingLevel),
       ]
     ),
   },
 
   {
     type: 'fixed',
-    render: ({ key, before }, nestingLevel) => (
-      makeString(' ', key, before, nestingLevel)
+    render: ({ key, beforeValue }, nestingLevel) => (
+      makeString(' ', key, beforeValue, nestingLevel)
     ),
   },
 ];

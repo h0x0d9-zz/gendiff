@@ -6,7 +6,7 @@ const getPropertyActions = [
     check: (beforeObj, afterObj, property) => (
       _.isPlainObject(beforeObj[property]) && _.isPlainObject(afterObj[property])
     ),
-    make: (before, after, fn) => ({ children: fn(before, after) }),
+    make: (beforeValue, afterValue, fn) => ({ children: fn(beforeValue, afterValue) }),
   },
 
   {
@@ -14,7 +14,7 @@ const getPropertyActions = [
     check: (beforeObj, afterObj, property) => (
       _.has(beforeObj, property) && !_.has(afterObj, property)
     ),
-    make: before => ({ before }),
+    make: beforeValue => ({ beforeValue }),
   },
 
   {
@@ -22,7 +22,7 @@ const getPropertyActions = [
     check: (beforeObj, afterObj, property) => (
       !_.has(beforeObj, property) && _.has(afterObj, property)
     ),
-    make: (before, after) => ({ after }),
+    make: (beforeValue, afterValue) => ({ afterValue }),
   },
 
   {
@@ -31,7 +31,7 @@ const getPropertyActions = [
       _.has(beforeObj, property) && _.has(afterObj, property)
       && !_.isEqual(beforeObj[property], afterObj[property])
     ),
-    make: (before, after) => ({ before, after }),
+    make: (beforeValue, afterValue) => ({ beforeValue, afterValue }),
   },
 
   {
@@ -40,7 +40,7 @@ const getPropertyActions = [
       _.has(beforeObj, property) && _.has(afterObj, property)
       && _.isEqual(beforeObj[property], afterObj[property])
     ),
-    make: before => ({ before }),
+    make: beforeValue => ({ beforeValue }),
   },
 ];
 

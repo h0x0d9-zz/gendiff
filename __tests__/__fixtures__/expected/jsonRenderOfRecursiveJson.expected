@@ -6,18 +6,18 @@
       {
         "key": "setting1",
         "type": "fixed",
-        "before": "Value 1"
+        "beforeValue": "Value 1"
       },
       {
         "key": "setting2",
         "type": "removed",
-        "before": "200"
+        "beforeValue": "200"
       },
       {
         "key": "setting3",
         "type": "updated",
-        "before": true,
-        "after": {
+        "beforeValue": true,
+        "afterValue": {
           "key": "value"
         }
       },
@@ -28,24 +28,24 @@
           {
             "key": "key",
             "type": "fixed",
-            "before": "value"
+            "beforeValue": "value"
           },
           {
             "key": "ops",
             "type": "added",
-            "after": "vops"
+            "afterValue": "vops"
           }
         ]
       },
       {
         "key": "setting4",
         "type": "added",
-        "after": "blah blah"
+        "afterValue": "blah blah"
       },
       {
         "key": "setting5",
         "type": "added",
-        "after": {
+        "afterValue": {
           "key5": "value5"
         }
       }
@@ -58,41 +58,41 @@
       {
         "key": "baz",
         "type": "updated",
-        "before": "bas",
-        "after": "bars"
+        "beforeValue": "bas",
+        "afterValue": "bars"
       },
       {
         "key": "foo",
         "type": "fixed",
-        "before": "bar"
+        "beforeValue": "bar"
       },
       {
         "key": "nest",
         "type": "updated",
-        "before": {
+        "beforeValue": {
           "key": "value"
         },
-        "after": "str"
+        "afterValue": "str"
       }
     ]
   },
   {
     "key": "group2",
     "type": "removed",
-    "before": {
+    "beforeValue": {
       "abc": "12345"
     }
   },
   {
     "key": "group3",
     "type": "added",
-    "after": {
+    "afterValue": {
       "fee": "100500"
     }
   },
   {
     "key": "follow",
     "type": "added",
-    "after": false
+    "afterValue": false
   }
 ]
